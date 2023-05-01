@@ -7,81 +7,65 @@ var elementGridY        = document.getElementById('grid-y');
 var elementForecastText = document.getElementById('forecast-text');
 
 //ADD EVENT FUNCTION TO HTML BUTTON 
-htmlButton.addEventListener('click', function () { UseClass();})
+//htmlButton.addEventListener('click', function () { UseClass();})
 
-function UseClass() {
-    // var geoInst = new Geo();
-    // var geoCoords = new Geo();
+navigator.geolocation.getCurrentPosition(success, error);
 
-    // geoCoords = geoInst.GetLocation();
-    // RequestForecast(geoCoords);
-    function success(position) {
+function success(position) {
         
-        fetchdata(position.coords.latitude, position.coords.longitude);
-        
-        }
-        
-        function error() {
-        
-        console.log("ERROR");
-        }
-        
-        if (!navigator.geolocation) {
-        
-         console.log = "Geolocation is not supported by your browser";
-        
-        } else {
-        
-        console.log = "Locating…";
-        
-        navigator.geolocation.getCurrentPosition(success, error);
-        
-        }
-
+    ReturnLocation(position.coords.latitude, position.coords.longitude);
+}
+    
+function error() {
+    
+    console.log("ERROR");
+    
+    if (!navigator.geolocation) {
+    
+     console.log = "Geolocation is not supported by your browser";
+    
+    } else {
+    
+    console.log = "Locating…";
+    
+    }
 }
 
-function SendLocation(lat, lon){
-    let ajax                  = new XMLHttpRequest; //Asynchronous JavaScript And Xml
-    let requestMethod         = "GET";              //Give me data
+navigator.geolocation.getCurrentPosition(success, error);
 
-    let requestUrl            = `https://api.weather.gov/points/${lat},${lon}`;                 //Url
-    let requestIsAsyncronous = false;
+function ReturnLocation(latitude, longitude) {
 
-    ajax.open(requestMethod, requestUrl, requestIsAsyncronous);
-}
-
-function fetchdata(latitude, longitude) {
-
-        fetch(`https://api.weather.gov/points/${latitude},${longitude}`)
+    fetch(`https://api.weather.gov/points/${latitude},${longitude}`)
     
-        .then(response => {
-    
+    .then(response => {        
         return response.json();
+    })
     
-        })
-    
-        .then(data => {
-    
-            console.log(data);
-    
-        });
+    .then(data => {
+        console.log(data);
+
+        var gridArray = [data.properties.gridId, data.properties.gridX, data.properties.gridY]
+
+        console.log(`"${data.properties.gridId}, ${data.properties.gridX}, ${data.properties.gridY}"`)
+
+        RequestForecast(gridArray);
+    });
 }
 
-function RequestForecast(office, gridX, gridY) {
-    let office                = this.elementOffice.value;
+function RequestForecast(gridArray) {
+    /*let office                = this.elementOffice.value;
     let gridX                 = this.elementGridX.value;
     let gridY                 = this.elementGridY.value;
+    */
 
     let ajax                  = new XMLHttpRequest; //Asynchronous JavaScript And Xml
     let requestMethod         = "GET";              //Give me data
 
-    let requestUrl3           = `https://api.weather.gov/points/${lat},${lon}`;
-    let requestUrl            = `https://api.weather.gov/gridpoints/${office}/${gridX},${gridY}/forecast`;                 //Url
-    let requestUrl2           = "https://api.weather.gov/gridpoints/" + office + "/" + gridX + "," + gridY + "/forecast";  //Url
+    let requestUrl            = `https://api.weather.gov/gridpoints/${gridArray[0]}/${gridArray[1]},${gridArray[2]}/forecast`;                 //Url
     let requestIsAsyncronous  = false;               //dont hold up wepage when waiting response
 
     //SEND AJAX REQUEST TO THE URL
-    ajax.open(requestMethod, requestUrl3, requestIsAsyncronous); //ajax.open(method, url, async)
+    ajax.open(requestMethod, requestUrl, requestIsAsyncronous); //ajax.open(method, url, async)
 
     //SET CALLBACK FUNCTION (this function gets called automatically when the response gets back) ***
     ajax.onreadystatechange = ReturnForecast;
