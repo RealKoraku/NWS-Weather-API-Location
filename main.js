@@ -31,8 +31,6 @@ function error() {
     }
 }
 
-navigator.geolocation.getCurrentPosition(success, error);
-
 function ReturnLocation(latitude, longitude) {
 
     fetch(`https://api.weather.gov/points/${latitude},${longitude}`)
@@ -47,6 +45,10 @@ function ReturnLocation(latitude, longitude) {
         var gridArray = [data.properties.gridId, data.properties.gridX, data.properties.gridY]
 
         console.log(`"${data.properties.gridId}, ${data.properties.gridX}, ${data.properties.gridY}"`)
+
+        document.getElementById('office').value = data.properties.gridId;
+        document.getElementById('grid-x').value = data.properties.gridX;
+        document.getElementById('grid-y').value = data.properties.gridY;
 
         RequestForecast(gridArray);
     });
