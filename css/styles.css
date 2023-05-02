@@ -1,16 +1,30 @@
 body {
     background-image: url(weatherbg.png);
     background-size: cover;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 p {
-    font-size: 12px;
+    font-size: 26px;
 }
-ul li{
+h1 {
+    font-size: 46px;
+}
+h2 {
+    font-size: 32px;
+}
+
+p, h1, h2 {
+    color: pink;
+    text-shadow: 1px 1px palevioletred;
+}
+
+ul li, ol {
     display: inline;
     color: pink;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 20px;
+    padding-right: 20px;
     text-align:center;
 }
 
@@ -18,6 +32,6 @@ ul {
     display: flex;
     justify-content: center;
     flex-direction: row;
-    width:100%;
+    width: 92%;
     text-align:center;
 }

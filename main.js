@@ -88,20 +88,22 @@ function ReturnForecast() {
         let unitTemp;
         let shortDesc;
 
-        let dayAry = ["day0", "day1", "day2", "day3", "day4", "day5", "day6"]
+        let dayAry = ["day0", "day1", "day2", "day3", "day4", "day5", "day6", "day7", "day8", "day9", "day10", "day11", "day12", "day13"]
 
         let message;
         //PARSE THE RESPONSE - convert values to JSON
         let responseData = JSON.parse(this.responseText);
 
-        for (i = 0; i < 7; i++) {
+        let j = 0;
+        let i = 0;
 
-            let htmlDayId = document.getElementById(dayAry[i]);
+        for (dayId = 0; dayId < dayAry.length; dayId++) {
+
+            let htmlDayId = document.getElementById(dayAry[dayId]);
 
         //GET THE WEATHER FROM THE RESPONSE TEXT
             properties = responseData.properties;
-            forecast   = properties.periods[i];
-            secondForecast = properties.periods[i+1];
+            forecast   = properties.periods[dayId];
 
             message    = forecast.detailedForecast;
 
@@ -109,7 +111,7 @@ function ReturnForecast() {
             unitTemp = forecast.temperatureUnit;
             shortDesc = forecast.shortForecast;
 
-            htmlDayId.innerHTML = `${forecast.name}<p>${shortDesc}</p><p>${temp}°${unitTemp}</p><hr color="teal" /><p>${secondForecast.name}</p><p>${secondForecast.shortForecast}</p><p>${secondForecast.temperature}°${secondForecast.temperatureUnit}`;
+            htmlDayId.innerHTML = `<p color="tan">${forecast.name}</p> <hr color="tan" /><p>${shortDesc}</p><p>${temp}°${unitTemp}</p>`;
 
             elementForecastText.innerHTML = message;
 
