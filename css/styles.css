@@ -1,0 +1,23 @@
+body {
+    background-image: url(weatherbg.png);
+    background-size: cover;
+}
+
+p {
+    font-size: 12px;
+}
+ul li{
+    display: inline;
+    color: pink;
+    padding-left: 50px;
+    padding-right: 50px;
+    text-align:center;
+}
+
+ul {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    width:100%;
+    text-align:center;
+}

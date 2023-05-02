@@ -7,7 +7,6 @@ var elementGridY        = document.getElementById('grid-y');
 var elementForecastText = document.getElementById('forecast-text');
 
 //ADD EVENT FUNCTION TO HTML BUTTON 
-//htmlButton.addEventListener('click', function () { UseClass();})
 
 navigator.geolocation.getCurrentPosition(success, error);
 
@@ -55,10 +54,6 @@ function ReturnLocation(latitude, longitude) {
 }
 
 function RequestForecast(gridArray) {
-    /*let office                = this.elementOffice.value;
-    let gridX                 = this.elementGridX.value;
-    let gridY                 = this.elementGridY.value;
-    */
 
     let ajax                  = new XMLHttpRequest; //Asynchronous JavaScript And Xml
     let requestMethod         = "GET";              //Give me data
@@ -86,16 +81,40 @@ function ReturnForecast() {
 
     if(responseStatusOk && responseComplete){
         //console.log(this.responseText.properties); //debug
+        let properties;
+        let forecast;
+        let secondForecast;
+        let temp;
+        let unitTemp;
+        let shortDesc;
 
+        let dayAry = ["day0", "day1", "day2", "day3", "day4", "day5", "day6"]
+
+        let message;
         //PARSE THE RESPONSE - convert values to JSON
         let responseData = JSON.parse(this.responseText);
 
-        //GET THE WEATHER FROM THE RESPONSE TEXT
-        let properties = responseData.properties;
-        let forecast   = properties.periods[0];
-        let message    = forecast.detailedForecast;
+        for (i = 0; i < 7; i++) {
 
-        elementForecastText.innerHTML = message;
+            let htmlDayId = document.getElementById(dayAry[i]);
+
+        //GET THE WEATHER FROM THE RESPONSE TEXT
+            properties = responseData.properties;
+            forecast   = properties.periods[i];
+            secondForecast = properties.periods[i+1];
+
+            message    = forecast.detailedForecast;
+
+            temp = forecast.temperature;
+            unitTemp = forecast.temperatureUnit;
+            shortDesc = forecast.shortForecast;
+
+            htmlDayId.innerHTML = `${forecast.name}<p>${shortDesc}</p><p>${temp}°${unitTemp}</p><hr color="teal" /><p>${secondForecast.name}</p><p>${secondForecast.shortForecast}</p><p>${secondForecast.temperature}°${secondForecast.temperatureUnit}`;
+
+            elementForecastText.innerHTML = message;
+
+        }
+
     }else{
         //SOMETHING WENT WRONG
         console.log(this);
