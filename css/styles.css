@@ -20,18 +20,21 @@ p, h1, h2 {
     text-shadow: 1px 1px palevioletred;
 }
 
-ul li, ol {
+ol li {
     display: inline;
     color: pink;
     padding-left: 20px;
     padding-right: 20px;
     text-align:center;
+    max-height:400px;
+    max-width:200px;
+    min-width:200px;
 }
 
-ul {
+ol {
     display: flex;
     justify-content: center;
     flex-direction: row;
     width: 92%;
-    text-align:center;
+    text-align:left;
 }

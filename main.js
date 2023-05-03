@@ -109,7 +109,7 @@ function ReturnForecast() {
             shortDesc = forecast.shortForecast;
             dayIcon = forecast.icon;
 
-            htmlDayId.innerHTML = `<p>${forecast.name}</p> <hr color="tan" /><p>${shortDesc}</p><p>${temp}°${unitTemp}</p><p><img width="40px" height="40px" src="${dayIcon}"/></p>`;
+            htmlDayId.innerHTML = `<h2>${forecast.name}</h2> <hr color="tan" /><p>${shortDesc}</p><p>${temp}°${unitTemp}</p><p><img width="40px" height="40px" src="${dayIcon}"/></p>`;
 
             elementForecastText.innerHTML = message;
         }
